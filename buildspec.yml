@@ -19,13 +19,13 @@ phases:
           echo "No build script found - skipping build";
         fi
 
-        #artifacts:
+   artifacts:
   # explicitly include the app folder and root files
-  #files:
-  #- 'app/'
-  #- 'package.json'
+  files:
+  - 'app/'
+  - 'package.json'
   #- 'package-lock.json'
-  #- 'scripts/'
-  #- 'appspec.yml'
-  #- 'buildspec.yml'
-  #discard-paths: no
+  - 'scripts/'
+  - 'appspec.yml'
+  - 'buildspec.yml'
+  discard-paths: no
