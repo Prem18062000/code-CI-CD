@@ -20,13 +20,13 @@ const server = http.createServer((req, res) => {
             margin: 0;
           }
           h1 {
-            font-size: 60px;
-            color: #333;
+            font-size: 30px;
+            color: #4f5759;
           }
         </style>
       </head>
       <body>
-        <h1>Hi My name is Prem,I am fromm Tamil Nadu</h1>
+        <h1>Hi My name is Prem,I am from Tamil Nadu</h1>
       </body>
     </html>
   `);
