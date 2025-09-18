@@ -11,9 +11,21 @@ phases:
   build:
     commands:
       - echo "Build started on date"
-      - if npm run | grep -q "build"; then npm run build; else echo "No build script"; fi
+      # safe check for a build script by grepping package.json (won't call npm if none)
+      - if [ -f package.json ] && grep -q '"build"' package.json; then
+          echo "Found build script, running npm run build";
+          npm run build;
+        else
+          echo "No build script found - skipping build";
+        fi
 
-artifacts:
-  files:
-    - '/*'
-  discard-paths: no
+        #artifacts:
+  # explicitly include the app folder and root files
+  #files:
+  #- 'app/'
+  #- 'package.json'
+  #- 'package-lock.json'
+  #- 'scripts/'
+  #- 'appspec.yml'
+  #- 'buildspec.yml'
+  #discard-paths: no
