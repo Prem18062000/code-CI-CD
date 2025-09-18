@@ -3,15 +3,35 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16
+      nodejs: 20      # change to 16 if you specifically need Node 16
     commands:
-      - echo "Installing dependencies"
-      - npm install
+      - echo "=== INSTALL PHASE ==="
+      - node -v
+      - npm -v
+      - npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+
+  pre_build:
+    commands:
+      - echo "=== PRE_BUILD ==="
+      - ls -la
+
   build:
     commands:
-      - echo "Build phase started"
-      - npm run start
+      - echo "=== BUILD PHASE ==="
+      # Run build only if package.json defines a build script
+      - if npm run | grep -q "build"; then npm run build; else echo "No build script; skipping build"; fi
+      - echo "Build finished at $(date)"
 
-artifacts:
-  files:
-    - "**/*"
+        #artifacts:
+        #files:
+        # - appspec.yml
+        # - scripts/**/*
+        # - package.json
+        #- package-lock.json
+        #- '**/*'
+        #discard-paths: no
+
+cache:
+  paths:
+    - '/root/.npm/**/*'
+
