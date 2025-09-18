@@ -5,18 +5,15 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo "Switching to app/ directory"
-      - cd app
-      - echo "Installing dependencies in app/..."
+      - echo "Installing dependencies at repo root..."
       - if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
   build:
     commands:
-      - echo "Building (if build script exists) in app/..."
-      - cd app
+      - echo "Build started on date"
       - if npm run | grep -q "build"; then npm run build; else echo "No build script"; fi
 
-        #artifacts:
-        #files:
-        #- 'app//'
-        #discard-paths: no
+artifacts:
+  files:
+    - '/*'
+  discard-paths: no
