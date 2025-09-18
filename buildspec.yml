@@ -1,43 +1,21 @@
 version: 0.2
 
-env:
-  variables:
-    NODE_ENV: production
-
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 20
     commands:
-      - echo "=== INSTALL PHASE ==="
-      - node -v
-      - npm -v
+      - echo "Installing dependencies"
       - npm ci --no-audit --no-fund || npm install --no-audit --no-fund
-
-  pre_build:
-    commands:
-      - echo "=== PRE_BUILD ==="
-      - ls -la
-      - echo "pwd: $(pwd)"
-
   build:
     commands:
-      - echo "=== BUILD PHASE ==="
-      # If package.json exists and contains a build script, run it; otherwise skip.
-      - if [ -f package.json ] && grep -q '"build"' package.json; then echo "build script found -> running npm run build" && npm run build; else echo "No build script found, skipping build step"; fi
-      - echo "Build phase finished at $(date)"
-
+      - echo "Build step (if available)"
+      - if npm run | grep -q "build"; then npm run build; fi
         #artifacts:
-  # For Node apps you probably deploy the whole repo; adjust base-directory/files as needed.
-  files:
-    #- appspec.yml
-    #- scripts/**/*
-    #- package.json
-    #- package-lock.json
-    #- '**/*'
-    #discard-paths: no
-
-cache:
-  paths:
-    - '/root/.npm/**/*'
-
+        # files:
+        # - appspec.yml
+        # - scripts/**/*
+        # - package.json
+        # - package-lock.json
+        # - '**/*'
+        # discard-paths: no
