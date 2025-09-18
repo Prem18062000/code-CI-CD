@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20      # change to 16 if you specifically need Node 16
+      nodejs: 16
     commands:
       - echo "=== INSTALL PHASE ==="
       - node -v
@@ -14,19 +14,20 @@ phases:
     commands:
       - echo "=== PRE_BUILD ==="
       - ls -la
+      - echo "pwd: $(pwd)"
 
   build:
     commands:
       - echo "=== BUILD PHASE ==="
-      # Run build only if package.json defines a build script
-      - if npm run | grep -q "build"; then npm run build; else echo "No build script; skipping build"; fi
-      - echo "Build finished at $(date)"
+      # Only run npm run build if package.json exists and contains a "build" script.
+      - if [ -f package.json ] && grep -q '"build"' package.json; then echo "build script found -> running npm run build"; npm run build; else echo "No build script found, skipping build step"; fi
+      - echo "Build phase finished at $(date)"
 
         #artifacts:
-        #files:
-        # - appspec.yml
-        # - scripts/**/*
-        # - package.json
+        # files:
+        #- appspec.yml
+        #- scripts/**/*
+        #- package.json
         #- package-lock.json
         #- '**/*'
         #discard-paths: no
