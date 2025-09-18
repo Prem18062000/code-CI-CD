@@ -2,7 +2,7 @@
     "name": "awsbuildtest",
     "version": "1.0.0",
     "description": "Sample project for AWS CodeBuild",
-    "main": "app.js",
+    "main": "app/app.js",
     "scripts": {
       "start": "node app/app.js"
     },
