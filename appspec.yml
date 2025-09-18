@@ -1,11 +1,18 @@
 version: 0.0
 os: linux
+
 files:
   - source: /
-    destination: /var/www/html
+    destination: /home/ubuntu/myapp
+    overwrite: true
+
 hooks:
-  AfterInstall:
+  BeforeInstall:
     - location: scripts/install_dependencies.sh
       timeout: 300
+      runas: ubuntu
+
+  ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
+      runas: ubuntu
